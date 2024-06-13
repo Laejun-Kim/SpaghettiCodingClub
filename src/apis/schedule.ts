@@ -1,7 +1,8 @@
 import { createScheduleData } from '@/types/types';
 import axios from 'axios';
 
-const token = sessionStorage.getItem('token');
+const token =
+  typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
 
 // 새 일정 생성 API
 export const createSchedule = async (reqData: createScheduleData) => {

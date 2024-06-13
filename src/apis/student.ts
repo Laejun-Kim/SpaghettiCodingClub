@@ -1,7 +1,8 @@
 import { changeTrackData } from '@/types/types';
 import axios from 'axios';
 
-const token = sessionStorage.getItem('token');
+const token =
+  typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
 // 트랙 참여자 전체 조회
 export const getStudents = async (trackId: number) => {
   console.log(token);

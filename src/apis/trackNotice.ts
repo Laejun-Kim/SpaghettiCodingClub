@@ -5,7 +5,8 @@ import {
   noticeUpdateData,
 } from '@/types/types';
 
-const token = sessionStorage.getItem('token');
+const token =
+  typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
 
 interface createTrackProps {
   trackId: number;

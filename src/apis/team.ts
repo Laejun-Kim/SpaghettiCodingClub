@@ -7,7 +7,8 @@ interface createTeamProps {
   teamData: Teams;
 }
 
-const token = sessionStorage.getItem('token');
+const token =
+  typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
 
 // 팀 생성
 export const createTeam = async ({

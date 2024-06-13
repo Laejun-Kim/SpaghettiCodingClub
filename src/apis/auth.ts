@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { registerReqData, loginReqData } from '@/types/types';
 
-const token = sessionStorage.getItem('token');
+const token =
+  typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
 
 // 로그인
 export const login = async (reqData: loginReqData) => {

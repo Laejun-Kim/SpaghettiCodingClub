@@ -77,7 +77,7 @@ const CalendarPage = () => {
         value={date}
         formatDay={(locale, date) => dayjs(date).format('D')}
         tileContent={addContent}
-        onChange={handleDateChange}
+        onChange={handleDateChange as any}
         locale='ko'
         showNeighboringMonth={false}
       />

@@ -1,7 +1,8 @@
 import { trackUpdateData } from '@/types/types';
 import axios from 'axios';
 
-const token = sessionStorage.getItem('token');
+const token =
+  typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
 
 // 모든 트랙 가져오기(selector)
 export const getTracks = async () => {

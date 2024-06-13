@@ -1,7 +1,8 @@
 import { newTrackWeekData } from '@/types/types';
 import axios from 'axios';
 
-const token = sessionStorage.getItem('token');
+const token =
+  typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
 
 interface createTrackWeekProps {
   trackId: number;
