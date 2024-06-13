@@ -72,11 +72,11 @@ const RegisterPage = () => {
     if (inputs.isAdmin) {
       console.log('관리자', inputs.isAdmin);
       registerUser(NewAdminUser);
-      router.replace('/');
+      if (typeof window !== 'undefined') router.replace('/');
     } else {
       console.log('학생', inputs.isAdmin);
       registerUser(NewUser);
-      router.replace('/');
+      if (typeof window !== 'undefined') router.replace('/');
     }
   };
 
@@ -90,7 +90,7 @@ const RegisterPage = () => {
 
   const cancelRegister = () => {
     console.log('회원가입취소');
-    router.replace('/');
+    if (typeof window !== 'undefined') router.replace('/');
   };
 
   return (

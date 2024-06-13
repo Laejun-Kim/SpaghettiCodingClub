@@ -14,7 +14,7 @@ const Header = () => {
   const HandleLogout = () => {
     logout();
     setIsLoggedIn(false);
-    router.replace('/');
+    if (typeof window !== 'undefined') router.replace('/');
   };
   const queryClient = useQueryClient();
   const result = queryClient.getQueryData(['loggedInUser']);
@@ -24,7 +24,7 @@ const Header = () => {
   const { role } = useRoleStore();
   console.log('role', role);
   if (role !== 'ADMIN') {
-    router.replace('/');
+    if (typeof window !== 'undefined') router.replace('/');
   }
 
   return (

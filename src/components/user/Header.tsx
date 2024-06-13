@@ -13,7 +13,7 @@ const Header = () => {
   const HandleLogout = () => {
     logout();
     setIsLoggedIn(false);
-    router.replace('/');
+    if (typeof window !== 'undefined') router.replace('/');
   };
   return (
     <header className='flex flex-col justify-center items-center bg-slate-400 w-[200px] min-w-[200px] h-screen p-6'>

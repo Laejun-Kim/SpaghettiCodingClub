@@ -36,7 +36,9 @@ const NoticeDetailPage = () => {
       await queryClient.invalidateQueries([
         'trackNotice',
       ] as InvalidateQueryFilters);
-      router.replace('/admin/notice');
+      if (typeof window !== 'undefined') {
+        router.replace('/admin/notice');
+      }
     },
     onError: (error: any) => {
       const errorMessage =

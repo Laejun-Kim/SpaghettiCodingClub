@@ -67,7 +67,9 @@ const LoginPage = () => {
     setIsLoggedIn(true);
     setRole(result.payload.role);
     setTrack(result.payload.track);
-    router.push('/');
+    if (typeof window !== 'undefined') {
+      router.push('/');
+    }
   };
 
   return (
