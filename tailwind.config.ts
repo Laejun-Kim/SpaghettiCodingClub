@@ -11,7 +11,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        myColor: '#F31260',
+        myPointColor: '#F31260',
+        peach: '#ffecee',
+        myBrown: '#574143',
+        lightBlue: '#B2EBF2',
+        lavender: 'black',
+        mintGreen: '#C8E6C9',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

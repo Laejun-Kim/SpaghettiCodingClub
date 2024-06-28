@@ -9,8 +9,7 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
-
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -25,6 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         queryCache: new QueryCache({
           onError: (error) => {
             console.log('error', error.message);
+            // toast.error(error.message);
           },
         }),
       }),
@@ -33,9 +33,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <NextUIProvider>
         {children}
-
-        <ReactQueryDevtools initialIsOpen={false} />
         <ToastContainer />
+        <ReactQueryDevtools initialIsOpen={false} />
       </NextUIProvider>
     </QueryClientProvider>
   );

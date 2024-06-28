@@ -14,9 +14,10 @@ import { toast } from 'react-toastify';
 interface Props {
   trackName: string;
   trackWeeks: string;
+  trackId: number;
 }
 
-const StudentInfo = ({ trackName, trackWeeks }: Props) => {
+const StudentInfo = ({ trackName, trackWeeks, trackId }: Props) => {
   const queryClient = useQueryClient();
   const param = useParams();
   const { userId } = param;
@@ -52,7 +53,7 @@ const StudentInfo = ({ trackName, trackWeeks }: Props) => {
               onClick={() =>
                 updateTrackMutation({
                   userId: +userId,
-                  oldTrackId: 5, // 이부분 수정해야함!!!!
+                  oldTrackId: trackId,
                   newTrackId: selectedTrack!.trackId,
                 })
               }

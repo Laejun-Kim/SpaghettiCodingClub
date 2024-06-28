@@ -25,6 +25,7 @@ const Notice = () => {
 
   return (
     <div>
+      <h1 className='text-2xl font-bold mb-4'>공지사항</h1>
       <div className='flex gap-2'>
         <TrackSelector />
         <Button onClick={() => refetch()}>조회</Button>

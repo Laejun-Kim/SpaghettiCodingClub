@@ -62,18 +62,18 @@ export const useAuthStore = create<AuthStore>()(
   ),
 );
 
-export const useRoleStore = create<RoleStore>()(
-  devtools(
-    persist(
-      (set) => ({
-        role: 'USER',
-        setRole: (role) => set({ role }), // 액션 구현
-      }),
-      // localStorage key 이름
-      { name: 'Role' },
-    ),
-  ),
-);
+// export const useRoleStore = create<RoleStore>()(
+//   devtools(
+//     persist(
+//       (set) => ({
+//         role: 'USER',
+//         setRole: (role) => set({ role }), // 액션 구현
+//       }),
+//       // localStorage key 이름
+//       { name: 'Role' },
+//     ),
+//   ),
+// );
 
 export const useUserStore = create<UserStore>()(
   devtools(

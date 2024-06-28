@@ -1,12 +1,11 @@
 import { changeTrackData } from '@/types/types';
 import axios from 'axios';
 
-const token =
-  typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
 // 트랙 참여자 전체 조회
 export const getStudents = async (trackId: number) => {
-  console.log(token);
   try {
+    const token =
+      typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/trackParticipants/${trackId}`,
       {
@@ -32,6 +31,8 @@ export const changeTrack = async ({
 }: changeTrackData) => {
   console.log(userId, oldTrackId);
   try {
+    const token =
+      typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/trackParticipants/${userId}/${oldTrackId}`,
       { newTrackId },

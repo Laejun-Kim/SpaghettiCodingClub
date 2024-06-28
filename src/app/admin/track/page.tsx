@@ -117,6 +117,7 @@ const TrackManage = () => {
           </form>
         </Modal>
       )}
+      <h1 className='text-2xl font-bold mb-4'>트랙 관리</h1>
       <form className='flex'>
         <Input
           type='text'

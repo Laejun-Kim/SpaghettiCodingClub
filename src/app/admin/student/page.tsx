@@ -27,6 +27,7 @@ const Student = () => {
 
   return (
     <div>
+      <h1 className='text-2xl font-bold mb-4'>수강생 관리</h1>
       <div className='flex gap-2'>
         <TrackSelector />
         <Button onClick={() => refetch()}>조회</Button>

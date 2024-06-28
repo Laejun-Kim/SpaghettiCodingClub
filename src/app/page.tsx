@@ -1,7 +1,20 @@
-import { Button } from '@nextui-org/react';
+'use client';
+
+import { useAuthStore } from '@/zustand/store';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  console.log('isloggedin', isLoggedIn);
+
+  if (isLoggedIn && sessionStorage.getItem('token')) {
+    router.replace('/redirect');
+  } else {
+    router.replace('/login');
+  }
+
   return (
     <>
       <div>
@@ -14,10 +27,10 @@ export default function Home() {
             <Link href={'/register'}>회원가입</Link>
           </li>
           <li>
-            <Link href={'/admin/student'}>수강생 관리</Link>
+            <Link href={'/admin/student'}>관리자 홈</Link>
           </li>
           <li>
-            <Link href={'/admin/student/userid'}>수강생 관리(개인)</Link>
+            <Link href={'/user'}>유저 홈</Link>
           </li>
           <li>
             <Link href={'/admin/track'}>트랙 관리</Link>
@@ -36,6 +49,12 @@ export default function Home() {
           </li>
           <li>
             <Link href={'/admin/teambuilding'}>팀빌딩</Link>
+          </li>
+          <li>
+            <Link href={'/user/mypage'}>유저 마이페이지</Link>
+          </li>
+          <li>
+            <Link href={'/admin/mypage'}>어드민 마이페이지</Link>
           </li>
         </ul>
       </div>

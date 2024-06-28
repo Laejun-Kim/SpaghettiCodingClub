@@ -46,9 +46,12 @@ const CalendarPage = () => {
     return (
       <>
         <div>{contents}</div>
-        <span onClick={() => setModalOpen(true)} className='days-btn'>
+        <div
+          onClick={() => setModalOpen(true)}
+          className='days-btn bg-myBrown text-white px-2 rounded-full font-bold mt-2'
+        >
           +
-        </span>
+        </div>
       </>
     );
   };

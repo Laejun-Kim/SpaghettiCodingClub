@@ -9,8 +9,8 @@ export default function AdminLayout({
   return (
     <div className='flex'>
       <Header />
-      <div className='flex flex-col justify-between grow'>
-        <div className='w-full py-10 flex justify-center '>
+      <div className='flex flex-col justify-between h-screen grow ml-[200px]'>
+        <div className='w-full py-10 flex justify-center'>
           <div className='w-full max-w-[800px]'>{children}</div>
         </div>
         <Footer />

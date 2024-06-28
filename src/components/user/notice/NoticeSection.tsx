@@ -1,7 +1,12 @@
+import { noticeData } from '@/types/types';
 import { Spacer } from '@nextui-org/react';
 import Link from 'next/link';
 
-const NoticeSection = () => {
+interface Props {
+  notices: noticeData[] | undefined;
+}
+
+const NoticeSection = ({ notices }: Props) => {
   return (
     <section className='p-6 bg-slate-200 h-[250px] rounded-lg'>
       <header className='flex justify-between items-center'>
@@ -14,26 +19,14 @@ const NoticeSection = () => {
       </header>
       <Spacer y={2} />
       <div className='px-4'>
-        <div className='flex justify-between'>
-          <p className='font-bold'>공지사항1입니다.</p>
-          <span className='text-slate-700'>2024-06-11</span>
-        </div>
-        <div className='flex justify-between'>
-          <p className='font-bold'>공지사항2입니다.</p>
-          <span className='text-slate-700'>2024-06-11</span>
-        </div>
-        <div className='flex justify-between'>
-          <p className='font-bold'>공지사항3입니다.</p>
-          <span className='text-slate-700'>2024-06-11</span>
-        </div>
-        <div className='flex justify-between'>
-          <p className='font-bold'>공지사항4입니다.</p>
-          <span className='text-slate-700'>2024-06-11</span>
-        </div>
-        <div className='flex justify-between'>
-          <p className='font-bold'>공지사항5입니다.</p>
-          <span className='text-slate-700'>2024-06-11</span>
-        </div>
+        {notices?.map((notice) => (
+          <div className='flex justify-between' key={notice.noticeId}>
+            <Link href={`/user/notice/${notice.noticeId}`}>
+              <p className='font-bold'>{notice.trackNoticeTitle}</p>
+            </Link>
+            {/* <span className='text-slate-700'>{notice.trackNoticeDate}</span> */}
+          </div>
+        ))}
       </div>
     </section>
   );

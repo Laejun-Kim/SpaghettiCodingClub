@@ -149,3 +149,31 @@ export interface createTeamsProps {
   trackWeekId: number;
   teamData: TeamsData[];
 }
+
+// 로그인한 유저 정보
+
+export interface currentUserData {
+  userId: number;
+  username: string;
+  email: string;
+  recommendEmail: string | null;
+  role: 'USER' | 'ADMIN';
+  trackId: number;
+  trackName: string;
+  currentTrackWeekId: number | null;
+  trackWeeks:
+    | {
+        trackWeekId: number;
+        weekName: string;
+        startDate: string;
+        endDate: string;
+      }[]
+    | null;
+  assessment: string | null;
+}
+
+// 로그인한 유저 정보 raw data
+export interface currentUserRawData {
+  message: string;
+  payload: currentUserData;
+}
