@@ -11,10 +11,12 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/zustand/store';
 import { useQuery } from '@tanstack/react-query';
 import { currentUserRawData } from '@/types/types';
+import { useWIPToast } from '@/hooks/useToast';
 
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
+  // useWIPToast();
 
   const { data } = useQuery({
     queryKey: ['loggedInUser'],
@@ -47,8 +49,13 @@ const Header = () => {
           <li className={isActive('/user/notice')}>
             <Link href={'/user/notice'}>공지게시판</Link>
           </li>
-          <li className={isActive('/user/schedule')}>
+          {/* <li className={isActive('/user/schedule')}>
             <Link href={'/user/schedule'}>팀 일정</Link>
+          </li> */}
+          <li className={isActive('/user/schedule')}>
+            <span className='cursor-pointer' onClick={useWIPToast}>
+              팀 일정
+            </span>
           </li>
         </ul>
         <div className='flex w-full items-center justify-around'>

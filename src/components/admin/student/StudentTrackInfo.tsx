@@ -17,7 +17,7 @@ interface Props {
   trackId: number;
 }
 
-const StudentInfo = ({ trackName, trackWeeks, trackId }: Props) => {
+const StudentTrackInfo = ({ trackName, trackWeeks, trackId }: Props) => {
   const queryClient = useQueryClient();
   const param = useParams();
   const { userId } = param;
@@ -75,4 +75,4 @@ const StudentInfo = ({ trackName, trackWeeks, trackId }: Props) => {
   );
 };
 
-export default StudentInfo;
+export default StudentTrackInfo;

@@ -1,11 +1,13 @@
 'use client';
 import { deleteAssessment } from '@/apis/assesment';
 import { getUserData } from '@/apis/auth';
+import { changeStudentName } from '@/apis/student';
 import StudentComment from '@/components/admin/student/StudentComment';
-import StudentInfo from '@/components/admin/student/StudentInfo';
+import StudentTrackInfo from '@/components/admin/student/StudentTrackInfo';
 import Modal from '@/components/ui/Modal';
+import { useWIPToast } from '@/hooks/useToast';
 
-import { Button, Divider, Spacer } from '@nextui-org/react';
+import { Button, Divider, Spacer, user } from '@nextui-org/react';
 import {
   InvalidateQueryFilters,
   useMutation,
@@ -13,13 +15,16 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 const UserId = () => {
   const queryClient = useQueryClient();
   const param = useParams();
   const [modalOpen, setModalOpen] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [isNameEditing, setIsNameEditing] = useState(false);
+  const nameRef = useRef<HTMLInputElement | null>(null); // ref 생성
   const { userId } = param;
 
   const { data, isLoading } = useQuery({
@@ -43,11 +48,46 @@ const UserId = () => {
     },
   });
 
+  const { mutate: changeNameMutation } = useMutation({
+    mutationFn: changeStudentName,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([
+        'userData',
+      ] as InvalidateQueryFilters);
+    },
+    onError: (error: any) => {
+      const errorMessage =
+        error.message || '에러가 발생했습니다. 다시 시도해주세요.';
+      toast.error(errorMessage);
+    },
+  });
+
+  const nameChangeHandler = async () => {
+    if (newName === '' || newName.trim().length === 0) {
+      toast.warning('이름을 제대로 입력해주세요.');
+    } else {
+      await changeNameMutation({ userId: +userId, username: newName });
+      setIsNameEditing(false);
+      toast.success('이름이 변경되었습니다.');
+    }
+  };
+
   const deleteAssessmentHandler = async (assessmentId: number) => {
     removeAssessmentMutation(assessmentId);
     setModalOpen(false);
     toast.success('로그가 삭제되었습니다.');
   };
+
+  const handleEditNameClick = () => {
+    setNewName(data.username);
+    setIsNameEditing(true);
+  };
+
+  useEffect(() => {
+    if (isNameEditing && nameRef.current) {
+      nameRef.current.focus(); // input 요소에 포커스를 설정
+    }
+  }, [isNameEditing]);
 
   console.log(data);
 
@@ -86,8 +126,31 @@ const UserId = () => {
           </div>
         </Modal>
       )}
-      <h1 className='text-2xl font-bold mb-4'>{username}</h1>
-      <StudentInfo
+      <h1 className='text-2xl font-bold '>
+        {isNameEditing ? (
+          <div>
+            <input
+              ref={nameRef}
+              className='w-[150px]'
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+            />
+            <span onClick={nameChangeHandler} className='cursor-pointer'>
+              ✔
+            </span>
+          </div>
+        ) : (
+          <div>
+            <span>{username}</span>
+            <span className='cursor-pointer' onClick={handleEditNameClick}>
+              ✏️
+            </span>
+          </div>
+        )}
+      </h1>
+      <h3>{email}</h3>
+      <Spacer y={2} />
+      <StudentTrackInfo
         trackName={trackName}
         trackWeeks={trackWeeks}
         trackId={trackId}
@@ -129,7 +192,9 @@ const UserId = () => {
       )}
 
       <Divider className='my-6' />
-      <Button color='danger'>수강생 삭제</Button>
+      <Button color='danger' onClick={useWIPToast}>
+        수강생 삭제
+      </Button>
     </div>
   );
 };

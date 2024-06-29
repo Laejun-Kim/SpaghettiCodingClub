@@ -1,5 +1,6 @@
 'use client';
 
+import { useWIPToast } from '@/hooks/useToast';
 import {
   Button,
   Dropdown,
@@ -8,7 +9,7 @@ import {
   DropdownTrigger,
   Spacer,
 } from '@nextui-org/react';
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 const TeamSection = () => {
   const [dropDownState, setDropDownState] = useState(false);
@@ -21,7 +22,9 @@ const TeamSection = () => {
         <div className='p-2 round-xl'>
           <Dropdown>
             <DropdownTrigger>
-              <span className='text-xl cursor-pointer'>👎</span>
+              <span onClick={useWIPToast} className='text-xl cursor-pointer'>
+                👎
+              </span>
             </DropdownTrigger>
             {!dropDownState ? (
               <DropdownMenu aria-label='Static Actions'>
