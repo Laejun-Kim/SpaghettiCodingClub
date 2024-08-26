@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { registerReqData, loginReqData } from '@/types/types';
+import { toast } from 'react-toastify';
 
 const token =
   typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
@@ -16,6 +17,9 @@ export const login = async (reqData: loginReqData) => {
     return response.data;
   } catch (err: any) {
     if (err.response && err.response.data && err.response.data.message) {
+      toast.error(
+        `${err.response.data.message} : 비밀번호나 이메일을 확인해주세요`,
+      );
       throw new Error(err.response.data.message);
     }
   }
@@ -131,6 +135,41 @@ export const updatePassword = async (
           Authorization: `${token}`,
         },
       },
+    );
+    console.log(response);
+    return response.data;
+  } catch (err: any) {
+    if (err.response && err.response.data && err.response.data.message) {
+      throw new Error(err.response.data.message);
+    }
+  }
+};
+
+//verify user email
+export const verifyUserEmail = async (email: string) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auths/send-user-verification-link`,
+      { email },
+    );
+    console.log(response);
+    return response.data;
+  } catch (err: any) {
+    if (err.response && err.response.data && err.response.data.message) {
+      throw new Error(err.response.data.message);
+    }
+  }
+};
+
+//verify recommend email
+export const verifyRecommendEmail = async (
+  email: string,
+  recommendEmail: string,
+) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auths/send-recommend-verification-link`,
+      { email, recommendEmail },
     );
     console.log(response);
     return response.data;

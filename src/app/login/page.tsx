@@ -97,7 +97,7 @@ const LoginPage = () => {
                 color='danger'
                 isDisabled={!watchEmail || !watchPassword}
               >
-                로그인 test
+                로그인
               </Button>
               <Link href='/register'>
                 <Button>회원가입</Button>

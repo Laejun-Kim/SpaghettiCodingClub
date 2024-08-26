@@ -5,7 +5,12 @@ import nbcIcon from '@/assets/images/spaghetti_logo.png';
 import { Button, Checkbox, Input, Select, SelectItem } from '@nextui-org/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { registerUser } from '../../apis/auth';
+import {
+  registerUser,
+  verifyRecommendEmail,
+  verifyUserEmail,
+} from '../../apis/auth';
+import Swal from 'sweetalert2';
 
 interface FormValues {
   username: string;
@@ -33,6 +38,7 @@ const RegisterPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    getValues,
   } = useForm<FormValues>({ mode: 'onChange' });
 
   const watchName = watch('username');
@@ -119,18 +125,36 @@ const RegisterPage = () => {
             {errors.username.message}
           </p>
         )}
-        <Input
-          aria-label='이메일'
-          type='text'
-          placeholder='email'
-          {...register('email', {
-            required: '이메일을 입력하세요',
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: '올바른 메일 형식이 아닙니다',
-            },
-          })}
-        />
+        <div className='flex w-full gap-1'>
+          <Input
+            aria-label='이메일'
+            type='text'
+            placeholder='email'
+            {...register('email', {
+              required: '이메일을 입력하세요',
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: '올바른 메일 형식이 아닙니다',
+              },
+            })}
+          />
+          <Button
+            size='md'
+            color='danger'
+            onClick={async () => {
+              const result = await verifyUserEmail(getValues('email'));
+              console.log(result.message);
+              Swal.fire({
+                icon: 'success',
+                title: '이메일이 발송되었습니다',
+                html: `${result.message}. <br>
+                이메일 인증 완료 후 회원가입을 진행해주세요`,
+              });
+            }}
+          >
+            인증하기
+          </Button>
+        </div>
         {errors.email && (
           <p className='text-red-500 text-xs text-center'>
             {errors.email.message}
@@ -196,18 +220,39 @@ const RegisterPage = () => {
             관리자이신가요?
           </Checkbox>
         </div>
-        <Input
-          aria-label='추천인 메일'
-          type='text'
-          placeholder='추천인 email'
-          {...register('recommend', {
-            // required: '이메일을 입력하세요',
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: '올바른 메일 형식이 아닙니다',
-            },
-          })}
-        />
+        <div className='flex w-full gap-1'>
+          <Input
+            aria-label='추천인 메일'
+            type='text'
+            placeholder='추천인 email'
+            {...register('recommend', {
+              // required: '이메일을 입력하세요',
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: '올바른 메일 형식이 아닙니다',
+              },
+            })}
+          />
+          <Button
+            size='md'
+            color='danger'
+            onClick={async () => {
+              const result = await verifyRecommendEmail(
+                getValues('email'),
+                getValues('recommend'),
+              );
+              console.log(result);
+              Swal.fire({
+                icon: 'success',
+                title: '이메일이 발송되었습니다',
+                html: `${result.message}. <br>
+                  추천인이 이메일 인증 후 회원가입 버튼을 누르세요.`,
+              });
+            }}
+          >
+            인증하기
+          </Button>
+        </div>
         {errors.recommend && (
           <p className='text-red-500 text-xs text-center'>
             {errors.recommend.message}
