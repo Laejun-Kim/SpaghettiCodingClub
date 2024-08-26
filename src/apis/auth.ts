@@ -17,9 +17,20 @@ export const login = async (reqData: loginReqData) => {
     return response.data;
   } catch (err: any) {
     if (err.response && err.response.data && err.response.data.message) {
-      toast.error(
-        `${err.response.data.message} : 비밀번호나 이메일을 확인해주세요`,
-      );
+      switch (err.response.data.message) {
+        case '인증이 필요합니다':
+          toast.error('인증이 필요합니다');
+          break;
+        case '로그인 실패':
+          toast.error('이메일이나 비밀번호를 확인하세요');
+          break;
+        default:
+          toast.error(
+            '로그인 중 에러가 발생했습니다. 나중에 다시 시도해주세요',
+          );
+          break;
+      }
+
       throw new Error(err.response.data.message);
     }
   }
